@@ -20,5 +20,5 @@
 ●Во время запуска тестового сценария БД должна быть пуста.
 
 ## Пример работы
-
+![](https://github.com/he1lhamster/ylab_hw/blob/main/first/ylab_hw_1.gif)
 

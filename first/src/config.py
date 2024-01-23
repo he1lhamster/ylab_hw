@@ -1,3 +1,4 @@
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Union, ClassVar
 
@@ -11,7 +12,9 @@ class Settings(BaseSettings):
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         extra="allow",
-        env_file='.env'
+        env_file=os.path.dirname(os.getcwd()) + "/.env",
+
+        # env_file='.env'
     )
 
     @property

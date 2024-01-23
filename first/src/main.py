@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import FastAPI
-from src.orm import AsyncORM
-from src.api import router as api_router
+from orm import AsyncORM
+from api import router as api_router
 
 app = FastAPI()
 

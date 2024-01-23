@@ -1,3 +1,4 @@
 first/.env
 first/venv/
-first/.idea/
+**/.idea/
+*.pyc

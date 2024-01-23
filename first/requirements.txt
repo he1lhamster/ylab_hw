@@ -1,3 +1,5 @@
+uvicorn
 sqlalchemy
 pydantic-settings
 asyncpg
+fastapi

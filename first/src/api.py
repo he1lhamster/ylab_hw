@@ -16,7 +16,7 @@ router = APIRouter(prefix='/api/v1')
 )
 async def get_menus(a_orm: AsyncORM = Depends()):
     result = await a_orm.get_menus()
-    result = jsonable_encoder(result)
+    result = jsonable_encoder(result) if result else []
     return JSONResponse(content=result, status_code=200)
 
 
@@ -36,8 +36,9 @@ async def get_menu(
         raise HTTPException(status_code=404, detail='menu not found')
 
     content = jsonable_encoder(result)
-    content['submenus_count'] = await a_orm.menu_count_submenus(api_test_menu_id)
-    content['dishes_count'] = await a_orm.menu_count_dishes(api_test_menu_id)
+    content['submenus_count'], content['dishes_count'] = await a_orm.menu_count_submenus_and_dishes(api_test_menu_id)
+    # content['submenus_count'] = await a_orm.menu_count_submenus(api_test_menu_id)
+    # content['dishes_count'] = await a_orm.menu_count_dishes(api_test_menu_id)
     return JSONResponse(content=content, status_code=200)
 
 
@@ -103,7 +104,7 @@ async def get_submenus(
         a_orm: AsyncORM = Depends(),
 ):
     result = await a_orm.get_submenus(api_test_menu_id)
-    result = jsonable_encoder(result)
+    result = jsonable_encoder(result) if result else []
     return JSONResponse(content=result, status_code=200)
 
 

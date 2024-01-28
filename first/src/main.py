@@ -1,14 +1,17 @@
-import asyncio
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from orm import AsyncORM
 from api import router as api_router
 
-app = FastAPI()
 
-
-@app.on_event('startup')
-async def on_startup_app():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await AsyncORM.create_tables()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")

@@ -1,7 +1,10 @@
 import uuid
-from sqlalchemy import ForeignKey, Numeric, Uuid
+from sqlalchemy import ForeignKey, Numeric, Uuid, MetaData
 from sqlalchemy.orm import Mapped, mapped_column
 from database import Base
+
+
+metadata = MetaData()
 
 
 class Menu(Base):

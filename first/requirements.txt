@@ -3,3 +3,7 @@ sqlalchemy
 pydantic-settings
 asyncpg
 fastapi
+gunicorn
+pytest
+pytest-asyncio
+httpx

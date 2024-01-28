@@ -1,7 +1,7 @@
 from typing import List, Any
 
 from fastapi import Depends
-from sqlalchemy import select
+from sqlalchemy import select, func, join
 from sqlalchemy.orm import Session
 
 from database import async_engine, get_async_session
@@ -17,7 +17,7 @@ class AsyncORM:
     @staticmethod
     async def create_tables():
         async with async_engine.begin() as conn:
-            await conn.run_sync(Base.metadata.drop_all)
+            # await conn.run_sync(Base.metadata.drop_all)
             await conn.run_sync(Base.metadata.create_all)
 
     # MENU ---------------
@@ -66,6 +66,21 @@ class AsyncORM:
         for submenu in result:
             count += await self.count_dishes(submenu.id)
         return count
+
+    async def menu_count_submenus_and_dishes(self, menu_id: uuid) -> [int, int]:
+        query = (
+            select(
+                func.count(func.distinct(Submenu.id)),
+                func.count(func.distinct(Dish.id)),
+            )
+            .select_from(Menu)
+            .join(Submenu, Submenu.menu_id == Menu.id)
+            .join(Dish, Dish.submenu_id == Submenu.id)
+            .where(Menu.id == menu_id)
+        )
+        result = await self.session.execute(query)
+        submenu_count, dishes_count = result.fetchall()[0]
+        return submenu_count, dishes_count
 
     # SUBMENU -------------
     async def get_submenus(self, menu_id: uuid) -> List[Submenu]:
@@ -136,7 +151,7 @@ class AsyncORM:
             return None
         dish_item.title = dish.title
         dish_item.description = dish.description
-        dish_item.price = str(dish.price)
+        dish_item.price = dish.price
         await self.session.commit()
         await self.session.refresh(dish_item)
         return dish_item

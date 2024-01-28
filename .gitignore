@@ -2,3 +2,5 @@ first/.env
 first/venv/
 **/.idea/
 *.pyc
+/first/.idea/
+/first/.pytest_cache/

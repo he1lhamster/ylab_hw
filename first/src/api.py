@@ -52,7 +52,7 @@ async def create_menu(
         menu: MenuSchema,
         a_orm: AsyncORM = Depends()
 ):
-    created_menu = await a_orm.insert_menu(menu)
+    created_menu = await a_orm.create_menu(menu)
     content_response = jsonable_encoder(created_menu)
     return JSONResponse(content=content_response, status_code=201)
 

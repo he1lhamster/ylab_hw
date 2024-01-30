@@ -19,6 +19,11 @@ async def root():
     return {"message": "Hello World"}
 
 
+@app.get("/health")
+def health_check():
+    return {"status": "OK"}
+
+
 app.include_router(api_router)
 
 

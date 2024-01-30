@@ -5,7 +5,6 @@ WORKDIR /fastapi_app
 COPY . .
 
 COPY requirements.txt .
-RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD ["pytest", "tests", "-s", "-v"]
+CMD ["pytest"]

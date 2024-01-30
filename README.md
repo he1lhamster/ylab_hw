@@ -28,15 +28,16 @@
 cd first/
 ```
 
-Собираем образ и поднимаем докер-контейнер 
+Собираем образ и поднимаем докер-контейнеры 
 ```
 docker-compose up --build -d
 ```
 
 Запускаем прогон тестов, приложение test внутри докер-контейнера
 ```
-docker-compose run test tests/scenario tests/crud
+docker-compose run tests_app pytest tests/scenario tests/crud
 ```
+![](https://github.com/he1lhamster/ylab_hw/blob/main/first/ylab_hw_2_dc.png)
 
 
 **Готово! Вы великолепны!**

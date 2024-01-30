@@ -32,7 +32,7 @@ class AsyncORM:
         menus = result.scalars().all()
         return menus
 
-    async def insert_menu(self, menu: MenuSchema) -> Menu:
+    async def create_menu(self, menu: MenuSchema) -> Menu:
         new_menu = Menu(title=menu.title, description=menu.description)
         self.session.add(new_menu)
         await self.session.flush()
@@ -137,7 +137,7 @@ class AsyncORM:
         new_dish = Dish(
             title=dish.title,
             description=dish.description,
-            price=str(dish.price),
+            price=dish.price,
             submenu_id=submenu_id,
         )
         self.session.add(new_dish)
